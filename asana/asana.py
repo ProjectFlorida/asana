@@ -395,6 +395,26 @@ class AsanaAPI(object):
         """
         return self._asana('tasks/%d/attachments' % task_id)
 
+    def task_add_followers(self, task_id, followers):
+        """This method adds followers to a task.
+
+        :param task_id: id# of an a task
+        :param followers: list of followers to add to task"""
+        payload = {}
+        for pos, person in enumerate(followers):
+            payload['followers[%d]' % pos] = person
+        return self._asana_post('tasks/%s/addFollowers' % task_id, payload)
+
+    def task_remove_followers(self, task_id, followers):
+        """This method removes followers from a task.
+
+        :param task_id: id# of an a task
+        :param followers: list of followers to remove from task"""
+        payload = {}
+        for pos, person in enumerate(followers):
+            payload['followers[%d]' % pos] = person
+        return self._asana_post('tasks/%s/removeFollowers' % task_id, payload)
+
     def get_attachment(self, attachment_id):
         """This method returns the full record for a single attachment.
 
